@@ -33,7 +33,6 @@ export class UserService {
   }
 
   create(payload: CreateUserDto) {
-    this.id += 1;
     let response: Response;
     if (this.validateEmail(payload)) {
       response = {
@@ -51,6 +50,7 @@ export class UserService {
       };
       throw new ConflictException(response);
     }
+    this.id += 1;
     const newUser = {
       id: this.id,
       ...payload,
@@ -100,9 +100,9 @@ export class UserService {
   }
 
   findOne(id: number) {
-    const product = this.userList.find((item) => item.id == id);
+    const user = this.userList.find((item) => item.id == id);
     let response: Response;
-    if (!product) {
+    if (!user) {
       response = {
         statusCode: 404,
         message: `User not found`,
@@ -110,7 +110,7 @@ export class UserService {
       };
       throw new NotFoundException(response);
     }
-    return product;
+    return user;
   }
 
   findAll() {
